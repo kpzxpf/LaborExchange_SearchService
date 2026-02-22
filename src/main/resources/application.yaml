@@ -1,0 +1,12 @@
+spring:
+  elasticsearch:
+    uris: http://localhost:9200
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id:
+        vacancy: vacancy-group
+        resume: resume-group
+    topics:
+      indexing-vacancy: indexing-vacancy
+      indexing-resume: indexing-resume
