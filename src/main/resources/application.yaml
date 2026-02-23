@@ -1,12 +1,18 @@
 spring:
   elasticsearch:
     uris: http://localhost:9200
+    connection-timeout: 5s
+    socket-timeout: 30s
   kafka:
     bootstrap-servers: localhost:9092
     consumer:
-      group-id:
-        vacancy: vacancy-group
-        resume: resume-group
+      group-id: search-service-group
+      auto-offset-reset: earliest
+      enable-auto-commit: false
+      max-poll-records: 50
     topics:
       indexing-vacancy: indexing-vacancy
       indexing-resume: indexing-resume
+
+server:
+  port: 8087

@@ -1,18 +1,14 @@
 package com.volzhin.laborexchange_searchservice.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.util.Set;
 
 @Data
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class ResumeIndexEvent {
-    private Long id;
+public class ResumeSearchResponse {
+    private String id;
     private String title;
     private String summary;
     private Integer experienceYears;

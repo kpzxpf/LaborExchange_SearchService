@@ -5,17 +5,20 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
-public class ResumeIndexEvent {
-    private Long id;
+@NoArgsConstructor
+public class VacancySearchResponse {
+    private String id;
     private String title;
-    private String summary;
-    private Integer experienceYears;
+    private String description;
+    private String companyName;
+    private String location;
+    private Double salary;
     private Set<String> skills;
-    private Set<String> institutions;
+    private LocalDateTime createdAt;
 }
