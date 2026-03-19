@@ -18,12 +18,12 @@ public class ExperienceResumeFilter implements QueryFilter<ResumeSearchRequest> 
         }
 
         return Optional.of(Query.of(q -> q
-                .range(r -> r.untyped(u -> {
-                    u.field("experienceYears");
-                    if (request.getExperienceYearsMin() != null) u.gte(JsonData.of(request.getExperienceYearsMin()));
-                    if (request.getExperienceYearsMax() != null) u.lte(JsonData.of(request.getExperienceYearsMax()));
-                    return u;
-                }))
+                .range(r -> {
+                    r.field("experienceYears");
+                    if (request.getExperienceYearsMin() != null) r.gte(JsonData.of(request.getExperienceYearsMin()));
+                    if (request.getExperienceYearsMax() != null) r.lte(JsonData.of(request.getExperienceYearsMax()));
+                    return r;
+                })
         ));
     }
 }

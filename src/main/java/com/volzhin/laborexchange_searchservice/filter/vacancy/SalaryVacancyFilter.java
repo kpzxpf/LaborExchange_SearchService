@@ -18,12 +18,12 @@ public class SalaryVacancyFilter implements QueryFilter<VacancySearchRequest> {
         }
 
         return Optional.of(Query.of(q -> q
-                .range(r -> r.untyped(u -> {
-                    u.field("salary");
-                    if (request.getSalaryMin() != null) u.gte(JsonData.of(request.getSalaryMin()));
-                    if (request.getSalaryMax() != null) u.lte(JsonData.of(request.getSalaryMax()));
-                    return u;
-                }))
+                .range(r -> {
+                    r.field("salary");
+                    if (request.getSalaryMin() != null) r.gte(JsonData.of(request.getSalaryMin()));
+                    if (request.getSalaryMax() != null) r.lte(JsonData.of(request.getSalaryMax()));
+                    return r;
+                })
         ));
     }
 }

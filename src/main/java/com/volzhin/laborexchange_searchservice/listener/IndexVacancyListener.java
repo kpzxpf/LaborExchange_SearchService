@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class IndexVacancyListener {
     private final IndexingVacancyService indexingVacancyService;
-    private final ObjectMapper mapper = new ObjectMapper();
+    private final ObjectMapper mapper;
 
     @KafkaListener(topics = "${spring.kafka.topics.indexing-vacancy}", groupId = "${spring.kafka.consumer.group-id}")
     public void listen(String message) {

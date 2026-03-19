@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class IndexResumeListener {
     private final IndexingResumeService indexingResumeService;
-    private final ObjectMapper mapper = new ObjectMapper();
+    private final ObjectMapper mapper;
 
     @KafkaListener(topics = "${spring.kafka.topics.indexing-resume}", groupId = "${spring.kafka.consumer.group-id}")
     public void listen(String message) {
