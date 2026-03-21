@@ -1,0 +1,13 @@
+spring:
+  elasticsearch:
+    uris: http://localhost:9200
+    connection-timeout: 1s
+    socket-timeout: 1s
+
+  kafka:
+    bootstrap-servers: localhost:9092
+
+  data:
+    elasticsearch:
+      repositories:
+        enabled: true
