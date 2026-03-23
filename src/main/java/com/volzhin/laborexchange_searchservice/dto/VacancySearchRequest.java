@@ -19,7 +19,7 @@ public class VacancySearchRequest {
     @Schema(description = "Free-text search query (fuzzy, multi-field)", example = "Java developer")
     private String query;
 
-    @Schema(description = "Required skills — all must match (case-insensitive AND logic)", example = "[\"Java\", \"Spring Boot\"]")
+    @Schema(description = "Required skills — at least one must match, more matches rank higher (case-insensitive OR logic)", example = "[\"Java\", \"Spring Boot\"]")
     private Set<String> skills;
 
     @Schema(description = "City / location — exact keyword match", example = "Moscow")
@@ -32,6 +32,18 @@ public class VacancySearchRequest {
     @Schema(description = "Maximum salary (inclusive)", example = "300000")
     @Positive
     private Double salaryMax;
+
+    @Schema(description = "Employment type filter", example = "FULL_TIME", allowableValues = {"FULL_TIME","PART_TIME","CONTRACT","FREELANCE","INTERNSHIP"})
+    private String employmentType;
+
+    @Schema(description = "Work format filter", example = "REMOTE", allowableValues = {"OFFICE","REMOTE","HYBRID"})
+    private String workFormat;
+
+    @Schema(description = "Sort field: RELEVANCE, DATE, SALARY", example = "RELEVANCE", defaultValue = "RELEVANCE")
+    private String sortBy = "RELEVANCE";
+
+    @Schema(description = "Sort direction: ASC or DESC", example = "DESC", defaultValue = "DESC")
+    private String sortOrder = "DESC";
 
     @Schema(description = "Page number (0-based)", example = "0", defaultValue = "0")
     @Min(0)

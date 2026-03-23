@@ -30,6 +30,12 @@ public class ResumeSearchResponse {
     @Schema(description = "Candidate's skills", example = "[\"Java\", \"Spring Boot\", \"Docker\"]")
     private Set<String> skills;
 
+    @Schema(description = "Candidate's location", example = "Moscow")
+    private String location;
+
     @Schema(description = "Educational institutions attended", example = "[\"Moscow State University\"]")
     private Set<String> institutions;
+
+    @Schema(description = "Expected monthly salary in rubles", example = "180000")
+    private Integer expectedSalary;
 }

@@ -37,6 +37,12 @@ public class VacancySearchResponse {
     @Schema(description = "Required skills", example = "[\"Java\", \"Spring Boot\", \"PostgreSQL\"]")
     private Set<String> skills;
 
+    @Schema(description = "Employment type", example = "FULL_TIME")
+    private String employmentType;
+
+    @Schema(description = "Work format", example = "REMOTE")
+    private String workFormat;
+
     @Schema(description = "Vacancy creation timestamp", example = "2026-03-20T12:00:00")
     private LocalDateTime createdAt;
 }

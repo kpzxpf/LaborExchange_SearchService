@@ -31,6 +31,12 @@ public class ResumeIndex {
     @Field(type = FieldType.Integer)
     private Integer experienceYears;
 
+    @Field(type = FieldType.Integer)
+    private Integer expectedSalary;
+
+    @Field(type = FieldType.Keyword, normalizer = "lowercase_normalizer")
+    private String location;
+
     @Field(type = FieldType.Keyword, normalizer = "lowercase_normalizer")
     private Set<String> skills;
 

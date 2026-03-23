@@ -1,9 +1,11 @@
 package com.volzhin.laborexchange_searchservice.controller;
 
 import com.volzhin.laborexchange_searchservice.dto.PageResponse;
+import com.volzhin.laborexchange_searchservice.dto.VacancyRecommendationRequest;
 import com.volzhin.laborexchange_searchservice.dto.VacancySearchRequest;
 import com.volzhin.laborexchange_searchservice.dto.VacancySearchResponse;
 import com.volzhin.laborexchange_searchservice.service.search.SearchVacancyService;
+import com.volzhin.laborexchange_searchservice.service.search.VacancyRecommendationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -25,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class VacancySearchController {
 
     private final SearchVacancyService searchVacancyService;
+    private final VacancyRecommendationService recommendationService;
 
     @Operation(
             summary = "Search vacancies",
@@ -49,5 +52,29 @@ public class VacancySearchController {
     public ResponseEntity<PageResponse<VacancySearchResponse>> search(
             @Valid @ModelAttribute VacancySearchRequest request) {
         return ResponseEntity.ok(searchVacancyService.search(request));
+    }
+
+    @Operation(
+            summary = "Get vacancy recommendations",
+            description = """
+                    Returns vacancies ranked by skill overlap with the user's profile.
+                    Each matching skill adds to the relevance score — vacancies matching more skills rank higher.
+                    Requires at least one matching skill (`minimumShouldMatch=1`).
+
+                    **Parameters:**
+                    - `skills` — list of skill names from the user's resume (required)
+                    - `location` — optional location filter (exact match)
+                    - `salaryMin` — optional minimum salary filter
+                    """
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Recommended vacancies ranked by skill match"),
+            @ApiResponse(responseCode = "400", description = "Validation error — skills must not be empty"),
+            @ApiResponse(responseCode = "503", description = "Elasticsearch unavailable")
+    })
+    @GetMapping("/recommendations")
+    public ResponseEntity<PageResponse<VacancySearchResponse>> recommend(
+            @Valid @ModelAttribute VacancyRecommendationRequest request) {
+        return ResponseEntity.ok(recommendationService.recommend(request));
     }
 }

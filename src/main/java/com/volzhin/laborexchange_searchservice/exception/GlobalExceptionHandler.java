@@ -1,5 +1,6 @@
 package com.volzhin.laborexchange_searchservice.exception;
 
+import co.elastic.clients.transport.TransportException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -7,6 +8,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.net.ConnectException;
 import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -24,10 +26,16 @@ public class GlobalExceptionHandler {
         return buildResponse(HttpStatus.BAD_REQUEST, errors);
     }
 
+    @ExceptionHandler({TransportException.class, ConnectException.class})
+    public ResponseEntity<Map<String, Object>> handleElasticsearch(Exception ex) {
+        log.error("Elasticsearch unavailable: {}", ex.getMessage());
+        return buildResponse(HttpStatus.SERVICE_UNAVAILABLE, "Search service temporarily unavailable");
+    }
+
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<Map<String, Object>> handleRuntime(RuntimeException ex) {
-        log.error("Search service error: {}", ex.getMessage());
-        return buildResponse(HttpStatus.SERVICE_UNAVAILABLE, ex.getMessage());
+        log.error("Search service runtime error: {}", ex.getMessage(), ex);
+        return buildResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error");
     }
 
     @ExceptionHandler(Exception.class)

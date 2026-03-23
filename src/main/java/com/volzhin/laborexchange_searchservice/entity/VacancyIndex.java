@@ -38,6 +38,12 @@ public class VacancyIndex {
     @Field(type = FieldType.Keyword, normalizer = "lowercase_normalizer")
     private Set<String> skills;
 
+    @Field(type = FieldType.Keyword)
+    private String employmentType;
+
+    @Field(type = FieldType.Keyword)
+    private String workFormat;
+
     @Field(type = FieldType.Date, format = DateFormat.date_hour_minute_second)
     private LocalDateTime createdAt;
 }

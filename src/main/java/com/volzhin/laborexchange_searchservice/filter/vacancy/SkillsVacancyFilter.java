@@ -26,7 +26,7 @@ public class SkillsVacancyFilter implements QueryFilter<VacancySearchRequest> {
                 .toList();
 
         return Optional.of(Query.of(q -> q
-                .bool(BoolQuery.of(b -> b.must(skillTerms)))
+                .bool(BoolQuery.of(b -> b.should(skillTerms).minimumShouldMatch("1")))
         ));
     }
 }

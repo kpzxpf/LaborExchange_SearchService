@@ -16,6 +16,11 @@ public class IndexingVacancyService {
     private final VacancyMapper vacancyMapper;
 
     public void indexVacancy(VacancyIndexEvent event) {
+        if (event.isDeleted()) {
+            log.info("Deleting vacancy from index id={}", event.getId());
+            vacancyRepository.deleteById(event.getId().toString());
+            return;
+        }
         log.info("Indexing vacancy id={} title={}", event.getId(), event.getTitle());
         vacancyRepository.save(vacancyMapper.toIndex(event));
     }
